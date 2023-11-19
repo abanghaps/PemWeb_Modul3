@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Footer from "./components/Footer";
+import Menu from "./pages/Menu";
+import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
 
 function App() {
+  const [activePage, setActivePage] = useState(""); // State untuk melacak halaman aktif
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Navbar setActivePage={setActivePage} />
+        <Hero />
+        <Routes>
+          <Route path="/" element={activePage === "menu" ? <Menu /> : null} />
+          <Route
+            path="/about"
+            element={activePage === "about" ? <AboutUs /> : null}
+          />
+          <Route
+            path="/contact"
+            element={activePage === "contact" ? <Contact /> : null}
+          />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
